@@ -105,10 +105,33 @@ cons$species <- substr(cons$Ident,12,17)
 prod <- prod[,c(1,4,3,6,2,5,8,12,11,9,10,7)]
 cons <- cons[,c(1,4,3,6,2,5,8,12,11,9,10,7)]
 
-
 ###################################################################################
 
 ## combining all plant data 
 plantdat <- read.csv("rawdat_cleaned.csv",row.names=NULL)
 plantdat <- rbind(plantdat,prod)
 
+# adding development stage variable (seedling, tillering, heading, ripening)
+for (i in 1:nrow(plantdat)){
+  if (plantdat$date[i] == 20170331 | plantdat$date[i] == 20170407)
+    plantdat$stage[i] = "seedling"
+    else if (plantdat$date[i] == 20170512)
+    plantdat$stage[i] = "tillering"
+    else if (plantdat$date[i] == 20170623)
+    plantdat$stage[i] = "heading"
+    else
+    plantdat$stage[i] = "ripening"
+}
+
+##combine plant and animal data
+cons$stage <- NA
+si_data <- rbind (plantdat, cons)
+
+## create new csv file containting all plant data
+write.csv(plantdat,file="plant_data.csv")
+
+## csv file of consumer + producer SI data
+write.csv(si_data, file="si_data.csv")
+
+
+  

@@ -92,14 +92,14 @@ farm_N <- ggplot(data = farm_means, aes(x = species, y = d15N_mean,group=farm,co
   ylab("d15N")+ggtitle("Each Farm")
 
 #Farm type
-farmtype_N <- ggplot(data = farmtype_means, aes(x = species, y = d15N_mean,group=Farm_Type,color=Farm_Type)) + 
-  geom_point(data=farmtype_means, aes(group=Farm_Type,color=Farm_Type)) + geom_line(data=farmtype_means,aes(group=Farm_Type,color=Farm_Type))+
+farmtype_N <- ggplot(data = farmtype_means, aes(x = species, y = d15N_mean,group=Farm_type,color=Farm_type)) + 
+  geom_point(data=farmtype_means, aes(group=Farm_type,color=Farm_type)) + geom_line(data=farmtype_means,aes(group=Farm_type,color=Farm_type))+
   geom_errorbar(aes(ymin = d15N_mean - d15N_std.error, ymax = d15N_mean + d15N_std.error),width=.3) +
   ylab("d15N")+ggtitle("Farm Type")
 
 #Landscape
-landscape_N <- ggplot(data = landscape_means, aes(x = species, y = d15N_mean,group=geography,color=geography)) + 
-  geom_point(data=landscape_means, aes(group=geography,color=geography)) + geom_line(data=landscape_means,aes(group=geography,color=geography))+
+landscape_N <- ggplot(data = landscape_means, aes(x = species, y = d15N_mean,group=landscape,color=landscape)) + 
+  geom_point(data=landscape_means, aes(group=landscape,color=landscape)) + geom_line(data=landscape_means,aes(group=landscape,color=landscape))+
   geom_errorbar(aes(ymin = d15N_mean - d15N_std.error, ymax = d15N_mean + d15N_std.error),width=.3) +
   ylab("d15N")+ggtitle("Landscape")
 
