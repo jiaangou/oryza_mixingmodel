@@ -49,6 +49,12 @@ rawdat<-rawdat%>%
 rawdat <- rawdat%>%
   na.omit(rawdat)
 
+# change three column into class "factor" 
+sapply(rawdat, class)
+rawdat$Farm_type <- as.factor(rawdat$Farm_type)
+rawdat$landscape <- as.factor(rawdat$landscape)
+rawdat$farm <- as.factor(rawdat$farm)
+
 write.csv(rawdat,file="rawdat_cleaned.csv",row.names=F)
 
 ##########################################################################################
