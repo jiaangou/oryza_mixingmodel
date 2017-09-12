@@ -49,12 +49,6 @@ rawdat<-rawdat%>%
 rawdat <- rawdat%>%
   na.omit(rawdat)
 
-# change three columns into class "factor" 
-sapply(rawdat, class)
-rawdat$Farm_type <- as.factor(rawdat$Farm_type)
-rawdat$landscape <- as.factor(rawdat$landscape)
-rawdat$farm <- as.factor(rawdat$farm)
-
 write.csv(rawdat,file="rawdat_cleaned.csv",row.names=F)
 
 ##########################################################################################
@@ -78,8 +72,9 @@ oryza_1$C_conc <- round((oryza_1$C_amt/10)/oryza_1$Amt,digits=2)
 oryza_1$N_conc <- round((oryza_1$N_amt/10)/oryza_1$Amt,digits=2)
 
 #remove C_amt and N_amt
-oryza_1 <- oryza_1%>%
-  subset(select=c(Ident,d13C,d15N,Amt,C_conc,N_conc,trophic_level,Farm_type,landscape))
+rmv <- c(which(colnames(oryza_1)== "C_amt"), 
+         which(colnames(oryza_1)== "N_amt"))
+oryza_1 <- oryza_1[, -rmv]
 
 #### Create new variable columns using Ident value
 #trophic level (consumer/producer)
@@ -110,6 +105,9 @@ cons$date <- substr(cons$Ident,4,11)
 prod$species <- substr(prod$Ident,4,5)
 cons$species <- substr(cons$Ident,12,17) 
 
+# unify the Ident column as rawdat
+prod$Ident <- substr(prod$Ident,1,13)
+
 #rearrange columns to the same order as rawdat
 prod <- prod[,c(1,4,3,6,2,5,8,12,11,9,10,7)]
 cons <- cons[,c(1,4,3,6,2,5,8,12,11,9,10,7)]
@@ -135,6 +133,13 @@ for (i in 1:nrow(plantdat)){
 ##combine plant and animal data
 cons$stage <- NA
 si_data <- rbind (plantdat, cons)
+
+## transform the variable type into "factor"
+sapply(si_data, class)
+rawdat$Farm_type <- as.factor(rawdat$Farm_type)
+rawdat$landscape <- as.factor(rawdat$landscape)
+rawdat$farm <- as.factor(rawdat$farm)
+rawdat$stage <- as.factor(rawdat$stage)
 
 ## create new csv file containting all plant data
 write.csv(plantdat,file="plant_data.csv")
