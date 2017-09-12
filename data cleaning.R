@@ -49,7 +49,7 @@ rawdat<-rawdat%>%
 rawdat <- rawdat%>%
   na.omit(rawdat)
 
-# change three column into class "factor" 
+# change three columns into class "factor" 
 sapply(rawdat, class)
 rawdat$Farm_type <- as.factor(rawdat$Farm_type)
 rawdat$landscape <- as.factor(rawdat$landscape)
