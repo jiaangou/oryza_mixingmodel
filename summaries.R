@@ -1,8 +1,13 @@
+install.packages(c("gridExtra", "dplyr", "tidyverse", "ggplot2", "plotrix"))
+
 library(gridExtra)
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
 library(plotrix)
+
+# plant data input
+plantdat <- read.csv(file="plant_data.csv")
 
 #####SUMMARIES
 sum_plantdat <- plantdat %>%
@@ -35,17 +40,8 @@ date_means <- plantdat%>%
   group_by(date,species)%>%
   summarise_each(funs(mean,std.error),d13C,d15N)
 
-#linear models: d13 ~ species + farm_type + geography + farm
-d13c_lm <- lm(data=rawdat, d13C ~ species+Farm_Type+geography+farm)
-summary(d13c_lm)
 
-#multiple linear models
-model_output <- rawdat %>% 
-  group_by(farm) %>% 
-  do(tidy(lm(d13C ~ species, data = .), conf.int = TRUE)) 
-
-View(model_output)
-
+###### d13C plots ########
 #ggplots
 #species mean plots
 overall <- ggplot(data = plant_means, aes(x = species, y = d13C_mean)) + 
@@ -79,7 +75,7 @@ dateplot <- ggplot(date_means,aes(x=species,y=d13C_mean))+geom_point(aes(group=d
   ylab("d13C")+ggtitle("date")
 
 
-###### dN15 plots ########
+###### d15N plots ########
 #Overall
 overall_N <- ggplot(data = plant_means, aes(x = species, y = d15N_mean)) + 
   geom_point() + geom_errorbar(aes(ymin = d15N_mean - d15N_std.error, ymax = d15N_mean + d15N_std.error),width=.3) +
