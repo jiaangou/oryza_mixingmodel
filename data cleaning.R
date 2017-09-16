@@ -131,7 +131,7 @@ for (i in 1:nrow(plantdat)){
 }
 
 ##combine plant and animal data
-cons$stage <- NA
+cons$stage <- "seedling"
 si_data <- rbind (plantdat, cons)
 
 ## transform the variable type into "factor"
