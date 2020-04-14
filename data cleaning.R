@@ -1,3 +1,4 @@
+#######lll#######3
 # packages needed in this script
 install.packages(c("dplyr", "tidyr", "broom", "ggplot2", "magrittr", "purrr", "readr", "plotrix"))
 
